@@ -49,7 +49,6 @@ router.post("/", (req,res,next)=>{
    Songwriter.find({
       name: req.body.name
 })
-.select("name id")
 .exec()
 .then(result =>{
    console.log(result);
@@ -92,7 +91,7 @@ router.post("/", (req,res,next)=>{
 router.get("/:songwriterid", (req, res, next) => {
     const songwriterid = req.params.songwriterid;
     Songwriter.findById(songwriterid)
-    .select("name _id songwriter")
+    .select("name _id")
     .populate("song")
     .exec()
     .then(songwriter => {
@@ -104,7 +103,7 @@ router.get("/:songwriterid", (req, res, next) => {
      } else {
       res.status(201).json({
       message: Messages.songwriter_found,
-      songwriter:songwriter
+      songwriter :songwriter
       })
    }
     })
@@ -174,7 +173,7 @@ router.get("/:songwriterid", (req, res, next) => {
          return res.status(404).json({
             message: Messages.songwriter_not_deleted
          })
-      } else {
+      } else{
          res.status(200).json({
             message: Messages.songwriter_deleted,
             request: {
